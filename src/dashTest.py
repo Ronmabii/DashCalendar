@@ -1,11 +1,13 @@
 from dash import Dash, html
 import dash_ag_grid as dag
 import pandas as pd
+from pathlib import Path
 
 
 app = Dash()
 
-df = pd.read_csv("TOTAL MILAGE Samsung + Nike + Garming up to May 2x, 2026 - Data.csv")
+csvPath = Path(__file__).parent.parent/'data'/'MILEAGE.csv'
+df = pd.read_csv(csvPath)
 
 # app.layout = [html.Div(children="Heckoff",id="training-calendar-container")]
 
