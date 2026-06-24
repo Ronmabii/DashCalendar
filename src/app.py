@@ -2,23 +2,30 @@ from dash import Dash, html
 import dash_ag_grid as dag
 import pandas as pd
 from pathlib import Path
+import plotly.express as px
 
 
 app = Dash()
 
-csvPath = Path(__file__).parent.parent/'data'/'MILEAGE.csv'
+csvPath = Path(__file__).parent.parent/'data'/'Mileage.csv'
+
 df = pd.read_csv(csvPath)
+
 
 # app.layout = [html.Div(children="Heckoff",id="training-calendar-container")]
 
-app.layout = html.Div(
-    [
-        dag.AgGrid(
-            rowData=df.to_dict("records"),
-            columnDefs=[{"field":i} for i in df.columns]
-        )
-    ]
-)
+# app.layout = html.Div(
+#     [
+#         dag.AgGrid(
+#             rowData=df.to_dict("records"),
+#             columnDefs=[{"field":i} for i in df.columns]
+#         )
+#     ]
+# )
+
+fig = px.scatter(df,x='Date',y='Miles')
+
+fig.show()
 
 if __name__ == '__main__':
     app.run(debug=True)
