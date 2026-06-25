@@ -1,5 +1,4 @@
-from dash import Dash, html
-import dash_ag_grid as dag
+from dash import Dash, html, dcc
 import pandas as pd
 from pathlib import Path
 import plotly.express as px
@@ -11,36 +10,37 @@ csvPath = Path(__file__).parent.parent/'data'/'Mileage.csv'
 
 df = pd.read_csv(csvPath)
 
-df["Date"] = pd.to_datetime(df["Date"]) # needs this to be recognized as a continuous timeline, otherwise compressed(str to datetime)
+df[["Date","Week (Monday)"]] = df[["Date","Week (Monday)"]].apply(pd.to_datetime) # needs this to be recognized as a continuous timeline, otherwise compressed(str to datetime)
 
+weeklyMileageSum = (
+    df.groupby("Week (Monday)", as_index=False)["Miles"] # without as_index wrong column entered into fig
+      .sum()
+)
 
-fig = px.scatter(df,x='Date',y='Miles',title="Running Timeline")
+fig = px.bar(
+    weeklyMileageSum,
+    x="Week (Monday)",
+    y="Miles",
+    labels={
+        "Week (Monday)": "Weeks",
+        "Miles": "Total Miles"
+    },
+    title="Weekly Running Mileage"
+)
+
+# fig = px.scatter(df,x='Date',y='Miles',title="Running Timeline") # daily dots
 
 app.layout = html.Div(
     [
-        # dag.AgGrid(
-        # rowData=df.to_dict("records"),
-        # columnDefs=[{"field":i} for i in df.columns]),
-        fig.show()
+        html.H1("Big Head"),
+        dcc.Graph(id='chart', figure = fig)
     ]
 )
 
 
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-# app.layout = [html.Div(children="Heckoff",id="training-calendar-container")]
-
-# app.layout = html.Div(
-#     [
-#         dag.AgGrid(
-#             rowData=df.to_dict("records"),
-#             columnDefs=[{"field":i} for i in df.columns]
-#         )
-#     ]
-# )
-
-
 
 
 
