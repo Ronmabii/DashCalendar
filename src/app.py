@@ -11,6 +11,23 @@ csvPath = Path(__file__).parent.parent/'data'/'Mileage.csv'
 
 df = pd.read_csv(csvPath)
 
+df["Date"] = pd.to_datetime(df["Date"]) # needs this to be recognized as a continuous timeline, otherwise compressed(str to datetime)
+
+
+fig = px.scatter(df,x='Date',y='Miles',title="Running Timeline")
+
+app.layout = html.Div(
+    [
+        # dag.AgGrid(
+        # rowData=df.to_dict("records"),
+        # columnDefs=[{"field":i} for i in df.columns]),
+        fig.show()
+    ]
+)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 # app.layout = [html.Div(children="Heckoff",id="training-calendar-container")]
 
@@ -23,12 +40,9 @@ df = pd.read_csv(csvPath)
 #     ]
 # )
 
-fig = px.scatter(df,x='Date',y='Miles')
 
-fig.show()
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
 
 # from dash import Dash, html, Input, Output, callback, ctx
 
