@@ -45,6 +45,6 @@ def func(n_clicks_btn1, n_clicks_btn2,n_clicks_btn3):
     elif button_id == "btn-heart":
         fig = px.scatter(dffHR, x='Date', y = 'Average Heart Rate',color="Activity Type")
     else:
-        fig = px.scatter(df,x='Date',y='Miles',title="Running Timeline")
+        fig = px.scatter(df,x='Date',y='Miles',title="Running Timeline", hover_data= {"Date": "|%B %d, %Y"})
 
     return fig
