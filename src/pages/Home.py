@@ -8,13 +8,14 @@ dash.register_page(__name__,path='/') # Home Page
 
 PROJECT_ROOT = Path(__file__).parents[2] # folder organization vs csv path name
 csvPath = PROJECT_ROOT/ 'data'/'MILEAGE.csv' # files name caps matter more than you know
+
 df = pd.read_csv(csvPath)
 
 df[["Date","Week (Monday)"]] = df[["Date","Week (Monday)"]].apply(pd.to_datetime) # needs this to be recognized as a continuous timeline, otherwise compressed(str to datetime)
 df['Duration(Mins)'] = pd.to_timedelta(df['Duration(Mins)']) 
 df["Minutes"] = df["Duration(Mins)"].dt.total_seconds() /60 # would be easier to convert to seconds in csv
 
-def pace_to_numeric(pace): # keep 00:10:30 min/mile format into floats (10.5) next time for easier time
+def pace_to_numeric(pace): # keep 10:30 min/mile format into floats (10.5) next time for easier time
     if pd.isna(pace):
         return pace
     minutes, seconds = map(int, pace.split(':'))
@@ -59,10 +60,10 @@ def func(n_clicks_btn1, n_clicks_btn2,n_clicks_btn3,n_clicks_btn4,n_clicks_btn5)
     elif button_id == "btn-heart":
         fig = px.scatter(dffHR, x='Date', y = 'Average Heart Rate',color="Activity Type", title="Average Heart Rate tracked starting from September 2024")
     elif button_id == "btn-duration":
-        fig = px.scatter(df, x='Date', y = 'Minutes', range_x=["2023-9-01", "2026-06-30"],title="Duration of runs starting from October 2023")
+        fig = px.scatter(df, x='Date', y = 'Minutes', range_x=["2023-9-01", "2026-06-30"],title="Duration of runs starting from November 2023")
         fig.update_xaxes(dtick="M3")
     elif button_id == "btn-pace":
-        fig = px.scatter(df, x='Date', y = 'Average Pace', title="Average pace tracked starting from September 2024",range_x=["2023-9-01", "2026-06-30"])
+        fig = px.scatter(df, x='Date', y = 'Average Pace', title="Average pace tracked starting from November 2023",range_x=["2023-9-01", "2026-06-30"])
         fig.update_layout(yaxis_title="Average Pace (Minutes per Mile)")
     else:
         fig = px.scatter(df,x='Date',y='Miles',title="Complete Tracked Mileage", hover_data= {"Date": "|%B %d, %Y"})
