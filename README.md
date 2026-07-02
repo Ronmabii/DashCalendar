@@ -4,4 +4,4 @@ Hosted at https://dashrundata.onrender.com/
 
 (May take ~30 seconds to load up if sleeping)
 
-<img width="1691" height="632" alt="Image" src="https://github.com/user-attachments/assets/b20b41dd-713e-4d44-b5f9-eef4206af24f" />
+<img width="1701" height="789" alt="Image" src="https://github.com/user-attachments/assets/e3dee8ca-a4ac-4084-aa75-6f2b96cdd665" />
